@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MetaPresence | لوحة المدير</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>لوحة مدير النظام 👨‍💼</h2>
+    <button onclick="showAddForm()">+ إضافة موظف</button>
+    <div id="addForm" style="display:none;margin-top:16px;">
+      <input id="empName" placeholder="اسم الموظف">
+      <input id="empCode" placeholder="كود الموظف الفريد">
+      <input id="empDept" placeholder="القسم">
+      <button onclick="addEmp()">إضافة</button>
+      <button onclick="hideAddForm()">إلغاء</button>
+      <div id="addMsg"></div>
+    </div>
+    <h3>كل الموظفين</h3>
+    <div id="empTable"></div>
+    <h3 style="margin-top:22px;">سجل الحضور (آخر 30)</h3>
+    <div id="attTable"></div>
+    <button onclick="exportCsv()">تصدير CSV</button>
+    <div class="sm"><a href="index.html">واجهة حضور الموظف</a></div>
+  </div>
+  <script src="dashboard.js"></script>
+</body>
+</html>
