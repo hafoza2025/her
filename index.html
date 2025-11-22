@@ -3,37 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>تسجيل الحضور</title>
+  <title>MetaPresence | حضور الموظفين</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="qrcode.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <div id="loading">جاري التعرف على الجهاز...</div>
+    <div id="loading">جارٍ تحديد بيانات الجهاز...</div>
     <div id="idCard" style="display:none;">
-      <h2>بطاقة الموظف</h2>
+      <h2>بطاقة موظف</h2>
       <h3 id="empName"></h3>
       <div id="empDept"></div>
-      <div>الكود: <span id="empCode"></span></div>
+      <div>كود: <span id="empCode"></span></div>
       <div>IP: <span id="empIP"></span></div>
-      <div id="qrcode"></div>
-      <button id="attendanceBtn">📍 حضور/انصراف</button>
+      <div style="margin:10px 0;" id="qrcode"></div>
+      <button id="attendanceBtn">تسجيل حضور / انصراف</button>
       <div id="attMsg"></div>
       <div id="attendanceHistory"></div>
     </div>
     <div id="notFound" style="display:none;text-align:center;">
       <h2 style="color:#b22">❌ IP غير مسجل</h2>
-      <p>جهازك غير معرف، يمكنك طلب ربط من الإدارة أو ربط يدوي بالكود.</p>
+      <p>جهازك غير معرف، يمكنك إدخال كود الموظف لربط الجهاز بحسابك.</p>
       <div style="margin:12px 0;font-family:monospace;color:#1976d2;">
         IP الحالي: <span id="currentIP"></span>
       </div>
-      <p>ادخل كود الموظف لربط الجهاز:</p>
-      <input id="bindEmpCode" placeholder="كود الموظف" style="direction:ltr;margin-bottom:8px;">
-      <button onclick="bindDevice()">ربط الجهاز بهذا الحساب</button>
+      <input id="bindEmpCode" placeholder="كود الموظف">
+      <button onclick="bindDevice()">ربط هذا الجهاز</button>
       <div id="bindResult"></div>
     </div>
+    <div class="sm"><a href="dashboard.html">لوحة المدير</a></div>
   </div>
-  <script src="mobile.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
