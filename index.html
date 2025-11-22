@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>تسجيل الحضور - موبايل</title>
+  <title>تسجيل الحضور</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="qrcode.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h2>تسجيل الحضور</h2>
-    <input id="emp_code" placeholder="كود الموظف">
-    <button id="attendanceBtn">📍 تسجيل حضور/انصراف</button>
-    <div class="result" id="emp_result"></div>
-    <div id="idCard" style="display:none;margin:12px 0;">
-      <h3 id="companyName"></h3>
-      <h2 id="employeeName"></h2>
-      <p id="employeeDepartment"></p>
-      <div id="employeeCode"></div>
-      <div id="qrcode"></div>
+    <h2>تسجيل حضور الموظف (IP detect)</h2>
+    <div id="status"></div>
+    <div id="empCard" style="display:none">
+      <h3>مرحباً <span id="empName"></span></h3>
+      <p><strong>القسم:</strong> <span id="empDept"></span></p>
+      <p><strong>كود:</strong> <span id="empCode"></span></p>
+      <button id="attendanceBtn">📍 تسجيل حضور/انصراف</button>
+      <div class="result" id="attResult"></div>
+      <div id="attendanceHistory"></div>
     </div>
-    <div id="attendanceHistory"></div>
+    <div id="notFound" style="display:none">
+      <h3 style="color:#d32f2f">❌ هذا الجهاز غير مسجل كموظف</h3>
+      <div id="currentIP"></div>
+      <p class="sm">أعطِ هذا الـ IP للمدير لربطه بحسابك!</p>
+    </div>
     <div class="sm"><a href="dashboard.html">لوحة المدير</a></div>
   </div>
   <script src="mobile.js"></script>
