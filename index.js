@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://xxxx.supabase.co';
-const SUPABASE_KEY = 'eyJhbGc...';
+const SUPABASE_URL = 'https://rrsfrnamnbvcjcozezqk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyc2ZybmFtbmJ2Y2pjb3plenFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4MDc0NTQsImV4cCI6MjA3OTM4MzQ1NH0.mO0hTrzCqrxRRephLFPxR7W_5fn1FVXS_c6ZCQNA3ck';
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let employeeData = null, ipAddress = "";
