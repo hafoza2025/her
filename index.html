@@ -2,124 +2,28 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام الحضور البسيط (Supabase Only)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>تسجيل الحضور - موبايل</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <style>
-    body { background:#f7f7f7; font-family:tahoma; display:flex; justify-content:center; align-items:center; height:100vh; }
-    .container { background:white; padding:30px 35px; border-radius:16px; max-width:440px; box-shadow:0 12px 35px #0002; margin: 10px}
-    h2 { color:#1976d2; margin-bottom:16px; }
-    input,select,button { font-size:1.1em; margin:6px 0; padding:10px 10px; border-radius:7px; border:1px solid #ccc; width:100%; }
-    button { background:linear-gradient(135deg,#667eea,#764ba2); color:white; font-weight:bold; border:none; cursor:pointer; }
-    button:hover { background: #1976d2;}
-    .result { margin-top:14px; font-weight:bold;}
-    .admin { margin-top:34px;	}
-    .table {width:100%; border-collapse:collapse;margin-top:18px;}
-    .table th,.table td {border:1px solid #e0e0e0;padding:7px 5px;text-align:center;}
-    .badge { padding: 2px 8px; border-radius: 8px; color:white; font-size: 13px;}
-    .badge.in    { background: #28a745;}
-    .badge.out   { background: #f44336;}
-    .sm {font-size:12px;color:#888;}
-  </style>
+  <script src="qrcode.min.js"></script>
 </head>
 <body>
-  <div class="container" id="att-container">
-    <h2>تسجيل الحضور (موظف)</h2>
-    <input id="emp_code" placeholder="كود الموظف" autocomplete="off">
-    <button onclick="checkIn()">📍 تسجيل حضور/انصراف</button>
+  <div class="container">
+    <h2>تسجيل الحضور</h2>
+    <input id="emp_code" placeholder="كود الموظف">
+    <button id="attendanceBtn">📍 تسجيل حضور/انصراف</button>
     <div class="result" id="emp_result"></div>
-    <div class="sm">للمدير: <a href="#admin" onclick="showAdmin()">لوحة التحكم</a></div>
-  </div>
-
-  <div class="container admin" id="admin-container" style="display:none;">
-    <h2>لوحة المدير 👨‍💼</h2>
-    <input id="admin_code" placeholder="كود الدخول (مثال: admin123)">
-    <button onclick="adminLogin()">تسجيل الدخول</button>
-    <hr style="margin:14px 0 14px 0;">
-    <div style="display:none;" id="dashboard">
-      <h3 style="margin:12px 0;">تقرير الحضور للموظفين</h3>
-      <button onclick="loadAttendances()">تحديث ⟳</button>
-      <div style="overflow:auto">
-        <table class="table" id="att_table"><tbody></tbody></table>
-      </div>
+    <div id="idCard" style="display:none;margin:12px 0;">
+      <h3 id="companyName"></h3>
+      <h2 id="employeeName"></h2>
+      <p id="employeeDepartment"></p>
+      <div id="employeeCode"></div>
+      <div id="qrcode"></div>
     </div>
-    <div class="sm" style="margin-top:9px;">
-      <a href="#" onclick="hideAdmin()">العودة لشاشة الموظف</a>
-    </div>
+    <div id="attendanceHistory"></div>
+    <div class="sm"><a href="dashboard.html">لوحة المدير</a></div>
   </div>
-
-  <script>
-    // --- إعدادات Supabase (غيّر هذه القيم بقيم مشروعك أنت) ---
-    const SUPABASE_URL = 'https://[YOUR_PROJECT].supabase.co';
-    const SUPABASE_KEY = 'eyJh...'; // من لوحة supabase -> API -> anon key
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    // === تسجيل الحضور للموظف ===
-    async function checkIn(){
-      const code = document.getElementById('emp_code').value.trim();
-      if(!code) return showRes('emp_result','🔸 أدخل كود الموظف!',true);
-
-      let { data: emp } = await supabase.from('employees').select('id,name').eq('employee_code', code).maybeSingle();
-      if(!emp) return showRes('emp_result','❌ موظف غير موجود!');
-
-      // جلب آخر سجل
-      let { data: last } = await supabase.from('attendance').select('action').eq('employee_id',emp.id).order('time',{ascending:false}).limit(1).maybeSingle();
-      let action = (last && last.action === 'checkin') ? 'checkout' : 'checkin';
-      
-      let { error } = await supabase.from('attendance').insert({employee_id: emp.id, action});
-      showRes('emp_result',`✅ تم تسجيل ${action === 'checkin' ? "الحضور" : "الانصراف"} لـ ${emp.name} بنجاح ✅`);
-      document.getElementById('emp_code').value='';
-    }
-
-    // === شاشة المدير ===
-    function showAdmin(){
-      document.getElementById('att-container').style.display="none";
-      document.getElementById('admin-container').style.display="block";
-      document.getElementById('dashboard').style.display="none";
-    }
-    function hideAdmin(){
-      document.getElementById('att-container').style.display="block";
-      document.getElementById('admin-container').style.display="none";
-    }
-    function showRes(id,msg,err){
-      let d=document.getElementById(id); d.textContent=msg;
-      d.style.color=err?'#f00':'#28a745';
-    }
-    // كلمة السر للمدير
-    const ADMIN_PASS = "admin123";  // غيرها لأي كلمة سر تريدها
-
-    function adminLogin(){
-      let v = document.getElementById('admin_code').value.trim();
-      if(v === ADMIN_PASS){
-        document.getElementById('dashboard').style.display="";
-        loadAttendances();
-        showRes('admin_code','',false);
-      }else{
-        showRes('admin_code','❌ خطأ في كود الدخول!',true);
-      }
-      document.getElementById('admin_code').value = '';
-    }
-
-    // === تقرير الحضور ===
-    async function loadAttendances(){
-      let { data: atts } = await supabase.from('attendance').select('*,employees(name,employee_code)').order('time',{ascending:false}).limit(30);
-      let html = `<tr><th>الموظف</th><th>الكود</th><th>النوع</th><th>الوقت</th></tr>`;
-      for(const att of atts||[]){
-        let name = att.employees?.name || 'غير معروف';
-        let code = att.employees?.employee_code || '-';
-        let type = att.action === 'checkin' ? 'حضور' : 'انصراف';
-        let badge = att.action === 'checkin' ? 'in' : 'out';
-        let time = new Date(att.time).toLocaleString('ar-EG');
-        html += `<tr>
-          <td>${name}</td>
-          <td>${code}</td>
-          <td><span class="badge ${badge}">${type}</span></td>
-          <td>${time}</td>
-        </tr>`;
-      }
-      document.getElementById('att_table').innerHTML = html;
-    }
-  </script>
+  <script src="mobile.js"></script>
 </body>
 </html>
