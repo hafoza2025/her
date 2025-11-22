@@ -6,25 +6,33 @@
   <title>تسجيل الحضور</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h2>تسجيل حضور الموظف (IP detect)</h2>
-    <div id="status"></div>
-    <div id="empCard" style="display:none">
-      <h3>مرحباً <span id="empName"></span></h3>
-      <p><strong>القسم:</strong> <span id="empDept"></span></p>
-      <p><strong>كود:</strong> <span id="empCode"></span></p>
-      <button id="attendanceBtn">📍 تسجيل حضور/انصراف</button>
-      <div class="result" id="attResult"></div>
+    <div id="loading">جاري التعرف على الجهاز...</div>
+    <div id="idCard" style="display:none;">
+      <h2>بطاقة الموظف</h2>
+      <h3 id="empName"></h3>
+      <div id="empDept"></div>
+      <div>الكود: <span id="empCode"></span></div>
+      <div>IP: <span id="empIP"></span></div>
+      <div id="qrcode"></div>
+      <button id="attendanceBtn">📍 حضور/انصراف</button>
+      <div id="attMsg"></div>
       <div id="attendanceHistory"></div>
     </div>
-    <div id="notFound" style="display:none">
-      <h3 style="color:#d32f2f">❌ هذا الجهاز غير مسجل كموظف</h3>
-      <div id="currentIP"></div>
-      <p class="sm">أعطِ هذا الـ IP للمدير لربطه بحسابك!</p>
+    <div id="notFound" style="display:none;text-align:center;">
+      <h2 style="color:#b22">❌ IP غير مسجل</h2>
+      <p>جهازك غير معرف، يمكنك طلب ربط من الإدارة أو ربط يدوي بالكود.</p>
+      <div style="margin:12px 0;font-family:monospace;color:#1976d2;">
+        IP الحالي: <span id="currentIP"></span>
+      </div>
+      <p>ادخل كود الموظف لربط الجهاز:</p>
+      <input id="bindEmpCode" placeholder="كود الموظف" style="direction:ltr;margin-bottom:8px;">
+      <button onclick="bindDevice()">ربط الجهاز بهذا الحساب</button>
+      <div id="bindResult"></div>
     </div>
-    <div class="sm"><a href="dashboard.html">لوحة المدير</a></div>
   </div>
   <script src="mobile.js"></script>
 </body>
