@@ -1,0 +1,156 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 10px;
+}
+.container { 
+  background: white;
+  padding: 30px 35px;
+  border-radius: 16px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+h2, h3, h4 { color: #1976d2; margin-bottom: 12px; }
+h2 { font-size: 24px; }
+h3 { font-size: 20px; margin-top: 20px; }
+h4 { font-size: 16px; margin-top: 16px; }
+
+input, button { 
+  font-size: 16px;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-family: inherit;
+}
+input:focus { outline: none; border-color: #667eea; }
+
+button { 
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { 
+  background: linear-gradient(135deg, #764ba2, #667eea);
+  transform: translateY(-2px);
+}
+button:active { transform: translateY(0); }
+
+.sm { font-size: 13px; color: #666; margin-top: 16px; text-align: center; }
+.sm a { color: #1976d2; text-decoration: none; }
+.sm a:hover { text-decoration: underline; }
+
+#idCard { 
+  text-align: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 16px;
+}
+#empName { font-size: 22px; font-weight: bold; margin: 10px 0; }
+#empDept, #empCode, #empIP { font-size: 14px; margin: 6px 0; }
+#qrcode { margin: 16px auto; display: inline-block; background: white; padding: 10px; border-radius: 8px; }
+
+#attMsg { 
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#attendanceHistory { 
+  margin-top: 18px;
+  max-height: 250px;
+  overflow-y: auto;
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+}
+#attendanceHistory > div { 
+  padding: 8px;
+  margin: 6px 0;
+  background: white;
+  border-radius: 6px;
+  font-size: 14px;
+  border-left: 4px solid #667eea;
+}
+
+.badge { 
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  display: inline-block;
+}
+.badge.in { background: #28a745; }
+.badge.out { background: #dc3545; }
+
+/* Table Styles */
+.table { 
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 14px;
+}
+.table th, .table td { 
+  border: 1px solid #ddd;
+  padding: 10px 8px;
+  text-align: center;
+}
+.table th { 
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: bold;
+}
+.table tr:nth-child(even) { background: #f9f9f9; }
+.table tr:hover { background: #f0f0f5; }
+
+#notFound { 
+  text-align: center;
+  padding: 20px;
+  background: #fff3cd;
+  border-radius: 10px;
+  border: 2px solid #ffc107;
+}
+#currentIP { 
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  color: #1976d2;
+  font-weight: bold;
+  margin: 12px 0;
+}
+#bindEmpCode { 
+  margin-top: 10px;
+  text-align: center;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+#loading { 
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #667eea;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .container { padding: 20px; }
+  h2 { font-size: 20px; }
+  button, input { font-size: 14px; padding: 10px; }
+  .table { font-size: 12px; }
+  .table th, .table td { padding: 6px 4px; }
+}
