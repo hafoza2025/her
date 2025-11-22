@@ -1,39 +1,15 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MetaPresence | حضور الموظفين</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="qrcode.min.js"></script>
+  <meta charset="UTF-8" />
+  <title>[translate:داشبورد إدارة الحضور]</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <div id="loading">جارٍ تحديد بيانات الجهاز...</div>
-    <div id="idCard" style="display:none;">
-      <h2>بطاقة موظف</h2>
-      <h3 id="empName"></h3>
-      <div id="empDept"></div>
-      <div>كود: <span id="empCode"></span></div>
-      <div>IP: <span id="empIP"></span></div>
-      <div style="margin:10px 0;" id="qrcode"></div>
-      <button id="attendanceBtn">تسجيل حضور / انصراف</button>
-      <div id="attMsg"></div>
-      <div id="attendanceHistory"></div>
-    </div>
-    <div id="notFound" style="display:none;text-align:center;">
-      <h2 style="color:#b22">❌ IP غير مسجل</h2>
-      <p>جهازك غير معرف، يمكنك إدخال كود الموظف لربط الجهاز بحسابك.</p>
-      <div style="margin:12px 0;font-family:monospace;color:#1976d2;">
-        IP الحالي: <span id="currentIP"></span>
-      </div>
-      <input id="bindEmpCode" placeholder="كود الموظف">
-      <button onclick="bindDevice()">ربط هذا الجهاز</button>
-      <div id="bindResult"></div>
-    </div>
-    <div class="sm"><a href="dashboard.html">لوحة المدير</a></div>
-  </div>
-  <script src="index.js"></script>
+  <h1>[translate:داشبورد إدارة الموظفين]</h1>
+  <div id="employee-list"></div>
+  <button id="add-employee-btn">[translate:إضافة موظف جديد]</button>
+
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>
